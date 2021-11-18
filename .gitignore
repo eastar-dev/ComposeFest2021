@@ -1,1 +1,6 @@
 week 1-Jetpack Compose basics/my-BasicsCodelab/.idea
+.DS_Store
+local.properties
+build/
+.gradle/
+.idea/
