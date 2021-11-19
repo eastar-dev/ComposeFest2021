@@ -39,11 +39,12 @@ fun MyApp(names: List<String> = listOf("World", "Compose")) {
     }
 }
 
-@SuppressLint("UnrememberedMutableState")
 @Composable
 fun Greeting(name: String) {
     Log.e(name)
+    Log.e(name)
     val expanded = remember { mutableStateOf(false) }
+    val extraPadding = if (expanded.value) 48.dp else 0.dp
     Log.e()
 
     Surface(
@@ -55,6 +56,7 @@ fun Greeting(name: String) {
             Log.e()
             Column(
                 Modifier.weight(1F)
+                    .padding(bottom = extraPadding)
             ) {
                 Log.e()
                 Text("Hello")
