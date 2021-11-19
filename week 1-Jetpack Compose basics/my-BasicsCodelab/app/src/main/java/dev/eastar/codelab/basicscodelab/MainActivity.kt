@@ -3,6 +3,7 @@ package dev.eastar.codelab.basicscodelab
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
@@ -26,17 +27,29 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun MyApp() {
-    // A surface container using the 'background' color from the theme
-    Surface(color = MaterialTheme.colors.background) {
-        Greeting("Android")
+fun MyApp(names: List<String> = listOf("World", "Compose")) {
+    Column {
+        for (name in names) {
+            Greeting(name = name)
+        }
     }
 }
+
+//@Composable
+//private fun MyApp() {
+//    // A surface container using the 'background' color from the theme
+//    Surface(color = MaterialTheme.colors.background) {
+//        Greeting("Android")
+//    }
+//}
 
 @Composable
 fun Greeting(name: String) {
     Surface(color = MaterialTheme.colors.primary) {
-        Text("Hello $name!", Modifier.padding(24.dp))
+        Column(Modifier.padding(24.dp)) {
+            Text("Hello")
+            Text(name)
+        }
     }
 }
 
