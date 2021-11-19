@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -35,25 +36,25 @@ fun MyApp(names: List<String> = listOf("World", "Compose")) {
     }
 }
 
-//@Composable
-//private fun MyApp() {
-//    // A surface container using the 'background' color from the theme
-//    Surface(color = MaterialTheme.colors.background) {
-//        Greeting("Android")
-//    }
-//}
-
 @Composable
 fun Greeting(name: String) {
-    Surface(color = MaterialTheme.colors.primary) {
-        Column(Modifier.padding(24.dp)) {
+    Surface(
+        color = MaterialTheme.colors.primary,
+        modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
+    ) {
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .padding(24.dp)
+        ) {
             Text("Hello")
             Text(name)
         }
     }
 }
 
-@Preview(showBackground = true)
+
+@Preview(showBackground = true, widthDp = 320)
 @Composable
 fun DefaultPreview() {
     BasicsCodelabTheme {
