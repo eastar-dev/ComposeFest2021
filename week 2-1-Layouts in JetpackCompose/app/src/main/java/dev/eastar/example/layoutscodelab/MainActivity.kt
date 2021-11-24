@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -37,13 +39,24 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun LayoutsCodelab() {
     Scaffold(topBar = {
-        Text(
-            text = "LayoutsCodelab",
-            style = MaterialTheme.typography.h3
-        )
+        MyTopBar()
     }) { innerPadding ->
         BodyContent(Modifier.padding(innerPadding))
     }
+}
+
+@Composable
+private fun MyTopBar() {
+    TopAppBar(
+        title = {
+            Text(text = "LayoutsCodelab")
+        },
+        actions = {
+            IconButton(onClick = { /* doSomething() */ }) {
+                Icon(Icons.Filled.Favorite, contentDescription = null)
+            }
+        }
+    )
 }
 
 @Composable
