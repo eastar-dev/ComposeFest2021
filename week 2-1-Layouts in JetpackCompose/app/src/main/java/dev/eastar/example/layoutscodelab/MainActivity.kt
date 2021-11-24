@@ -38,6 +38,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -191,10 +192,27 @@ val topics = listOf(
     "Religion", "Social sciences", "Technology", "TV", "Writing"
 )
 
+// @Composable
+// fun BodyContent(modifier: Modifier = Modifier) {
+//     Row(modifier = modifier.horizontalScroll(rememberScrollState())) {
+//         StaggeredGrid(modifier = modifier, rows = 5) {
+//             for (topic in topics) {
+//                 Chip(modifier = Modifier.padding(8.dp), text = topic)
+//             }
+//         }
+//     }
+// }
+
 @Composable
 fun BodyContent(modifier: Modifier = Modifier) {
-    Row(modifier = modifier.horizontalScroll(rememberScrollState())) {
-        StaggeredGrid(modifier = modifier, rows = 5) {
+    Row(
+        modifier = modifier
+            .background(color = Color.LightGray)
+            .padding(16.dp)
+            .size(200.dp)
+            .horizontalScroll(rememberScrollState())
+    ) {
+        StaggeredGrid {
             for (topic in topics) {
                 Chip(modifier = Modifier.padding(8.dp), text = topic)
             }
