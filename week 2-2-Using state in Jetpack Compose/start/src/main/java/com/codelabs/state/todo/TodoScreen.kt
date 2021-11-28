@@ -27,8 +27,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -76,6 +78,12 @@ fun TodoScreen(
     }
 }
 
+@Composable
+fun TodoInputTextField(modifier: Modifier) {
+    val (text, setText) = remember { mutableStateOf("") }
+    TodoInputText(text, setText, modifier)
+}
+
 /**
  * Stateless composable that displays a full-width [TodoItem].
  *
@@ -84,7 +92,12 @@ fun TodoScreen(
  * @param modifier modifier for this element
  */
 @Composable
-fun TodoRow(todo: TodoItem, onItemClicked: (TodoItem) -> Unit, modifier: Modifier = Modifier) {
+fun TodoRow(
+    todo: TodoItem,
+    onItemClicked: (TodoItem) -> Unit,
+    modifier: Modifier = Modifier,
+    iconAlpha: Float = remember(todo.id) { randomTint() },
+) {
     Row(
         modifier = modifier
             .clickable { onItemClicked(todo) }
@@ -94,10 +107,12 @@ fun TodoRow(todo: TodoItem, onItemClicked: (TodoItem) -> Unit, modifier: Modifie
         Text(todo.task)
         Icon(
             imageVector = todo.icon.imageVector,
+            tint = LocalContentColor.current.copy(alpha = iconAlpha),
             contentDescription = stringResource(id = todo.icon.contentDescription)
         )
     }
 }
+// val iconAlpha = randomTint()
 
 private fun randomTint(): Float {
     return Random.nextFloat().coerceIn(0.3f, 0.9f)
