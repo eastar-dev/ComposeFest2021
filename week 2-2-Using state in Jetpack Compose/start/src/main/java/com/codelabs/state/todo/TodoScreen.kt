@@ -32,6 +32,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,6 +54,11 @@ fun TodoScreen(
     onRemoveItem: (TodoItem) -> Unit
 ) {
     Column {
+        // add TodoItemInputBackground and TodoItem at the top of TodoScreen
+        TodoItemInputBackground(elevate = true, modifier = Modifier.fillMaxWidth()) {
+            TodoItemInput(onItemComplete = onAddItem)
+        }
+
         LazyColumn(
             modifier = Modifier.weight(1f),
             contentPadding = PaddingValues(top = 8.dp)
@@ -78,11 +84,60 @@ fun TodoScreen(
     }
 }
 
+
 @Composable
-fun TodoInputTextField(modifier: Modifier) {
+fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
+    //after TodoInputTextField
     val (text, setText) = remember { mutableStateOf("") }
-    TodoInputText(text, setText, modifier)
+    // onItemComplete is an event will fire when an item is completed by the user
+    Column {
+        Row(
+            Modifier
+                .padding(horizontal = 16.dp)
+                .padding(top = 16.dp)
+        ) {
+            //before TodoInputTextField
+            // TodoInputTextField(
+            //     Modifier
+            //         .weight(1f)
+            //         .padding(end = 8.dp)
+            // )
+            //after TodoInputTextField
+            TodoInputTextField(
+                text = text,
+                onTextChange = setText,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(end = 8.dp)
+            )
+            TodoEditButton(
+                onClick = {
+                    onItemComplete(TodoItem(text))
+                    setText("")
+                },
+                text = "Add",
+                modifier = Modifier.align(Alignment.CenterVertically),
+                enabled = text.isNotBlank() // enable if text is not blank
+            )
+        }
+    }
 }
+
+//before TodoInputTextField https://developer.android.com/codelabs/jetpack-compose-state/img/f1f20992a7203778.png
+// @Composable
+// fun TodoInputTextField(modifier: Modifier) {
+//     val (text, setText) = remember { mutableStateOf("") }
+//     TodoInputText(text, setText, modifier)
+// }
+//after TodoInputTextField https://developer.android.com/codelabs/jetpack-compose-state/img/866bd1a19a36fbab.png
+@Composable
+fun TodoInputTextField(text: String, onTextChange: (String) -> Unit, modifier: Modifier) {
+    TodoInputText(text, onTextChange, modifier)
+}
+
+@Preview
+@Composable
+fun PreviewTodoItemInput() = TodoItemInput(onItemComplete = { })
 
 /**
  * Stateless composable that displays a full-width [TodoItem].
