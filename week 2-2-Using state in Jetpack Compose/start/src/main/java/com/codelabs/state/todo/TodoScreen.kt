@@ -93,7 +93,11 @@ fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
     val (text, setText) = remember { mutableStateOf("") }
     val (icon, setIcon) = remember { mutableStateOf(TodoIcon.Default) }
     val iconsVisible = text.isNotBlank()
-
+    val submit = {
+        onItemComplete(TodoItem(text, icon))
+        setIcon(TodoIcon.Default)
+        setText("")
+    }
     // onItemComplete is an event will fire when an item is completed by the user
     Column {
         Row(
@@ -114,18 +118,10 @@ fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
                 modifier = Modifier
                     .weight(1f)
                     .padding(end = 8.dp),
-                {
-                    onItemComplete(TodoItem(text))
-                    setIcon(TodoIcon.Default)
-                    setText("")
-                }
+                submit
             )
             TodoEditButton(
-                onClick = {
-                    onItemComplete(TodoItem(text))
-                    setIcon(TodoIcon.Default)
-                    setText("")
-                },
+                onClick = submit,
                 text = "Add",
                 modifier = Modifier.align(Alignment.CenterVertically),
                 enabled = text.isNotBlank() // enable if text is not blank
