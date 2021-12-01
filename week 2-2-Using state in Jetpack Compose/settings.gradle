@@ -15,5 +15,5 @@
  */
 
 rootProject.name = "StateCodelab"
-//include ':finished'
+include ':finished'
 include ':start'

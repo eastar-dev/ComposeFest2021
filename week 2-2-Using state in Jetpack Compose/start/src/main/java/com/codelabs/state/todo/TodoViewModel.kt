@@ -17,6 +17,7 @@
 package com.codelabs.state.todo
 
 
+import android.log.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -26,7 +27,7 @@ import androidx.lifecycle.ViewModel
 class TodoViewModel : ViewModel() {
 
     // private state
-    var currentEditPosition by mutableStateOf(-1)
+    private var currentEditPosition by mutableStateOf(-1)
 
     // state
     val currentEditItem: TodoItem?
@@ -34,6 +35,7 @@ class TodoViewModel : ViewModel() {
 
     // event: onEditItemSelected
     fun onEditItemSelected(item: TodoItem) {
+        Log.e()
         currentEditPosition = todoItems.indexOf(item)
     }
 
