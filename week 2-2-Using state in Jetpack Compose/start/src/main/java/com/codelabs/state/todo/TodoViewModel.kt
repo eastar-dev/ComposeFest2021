@@ -16,11 +16,43 @@
 
 package com.codelabs.state.todo
 
+
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 
 class TodoViewModel : ViewModel() {
 
+    // private state
+    var currentEditPosition by mutableStateOf(-1)
+
+    // state
+    val currentEditItem: TodoItem?
+        get() = todoItems.getOrNull(currentEditPosition)
+
+    // event: onEditItemSelected
+    fun onEditItemSelected(item: TodoItem) {
+        currentEditPosition = todoItems.indexOf(item)
+    }
+
+    // event: onEditDone
+    fun onEditDone() {
+        currentEditPosition = -1
+    }
+
+    // event: onEditItemChange
+    fun onEditItemChange(item: TodoItem) {
+        val currentItem = requireNotNull(currentEditItem)
+        require(currentItem.id == item.id) {
+            "You can only change an item with the same id as currentEditItem"
+        }
+
+        todoItems[currentEditPosition] = item
+    }
+
+    //before step09
     // private var _todoItems = MutableLiveData(listOf<TodoItem>())
     // val todoItems: LiveData<List<TodoItem>> = _todoItems
     // fun addItem(item: TodoItem) {
@@ -33,6 +65,7 @@ class TodoViewModel : ViewModel() {
     //     }
     // }
 
+    //after step09
     var todoItems = mutableStateListOf<TodoItem>()
         private set
 
@@ -42,5 +75,6 @@ class TodoViewModel : ViewModel() {
 
     fun removeItem(item: TodoItem) {
         todoItems.remove(item)
+        onEditDone() // don't keep the editor open when removing items
     }
 }

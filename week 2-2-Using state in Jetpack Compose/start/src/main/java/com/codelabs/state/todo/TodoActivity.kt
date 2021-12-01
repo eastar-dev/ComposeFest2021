@@ -28,7 +28,7 @@ import com.codelabs.state.ui.StateCodelabTheme
 
 class TodoActivity : AppCompatActivity() {
 
-    val todoViewModel by viewModels<TodoViewModel>()
+    private val todoViewModel by viewModels<TodoViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,10 +44,18 @@ class TodoActivity : AppCompatActivity() {
 
 @Composable
 private fun TodoActivityScreen(todoViewModel: TodoViewModel) {
-    val items: List<TodoItem> by todoViewModel.todoItems.observeAsState(listOf())
+    //before step09
+//    val items: List<TodoItem> by todoViewModel.todoItems.observeAsState(listOf())
+//    TodoScreen(
+//        items = items,
+//        onAddItem = todoViewModel::addItem, // in the next steps we'll complete this
+//        onRemoveItem = todoViewModel::removeItem // in the next steps we'll complete this
+//    )
+
+    //after step09
     TodoScreen(
-        items = items,
+        items = todoViewModel.todoItems,
         onAddItem = todoViewModel::addItem, // in the next steps we'll complete this
-        onRemoveItem = todoViewModel::removeItem // in the next steps we'll complete this
+        onRemoveItem = todoViewModel::removeItem, // in the next steps we'll complete this
     )
 }
