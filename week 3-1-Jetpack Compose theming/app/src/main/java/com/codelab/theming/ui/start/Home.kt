@@ -106,6 +106,7 @@ fun Header(
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             Text(
                 text = text,
+                style = MaterialTheme.typography.subtitle2,
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color.LightGray)
