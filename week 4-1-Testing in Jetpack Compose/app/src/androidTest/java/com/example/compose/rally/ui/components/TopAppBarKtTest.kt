@@ -1,10 +1,8 @@
 package com.example.compose.rally.ui.components
 
 import androidx.compose.material.Text
-import androidx.compose.ui.test.assertIsSelected
+import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithContentDescription
-import androidx.compose.ui.test.onNodeWithText
 import com.example.compose.rally.RallyScreen
 import org.junit.Assert.*
 
@@ -58,6 +56,7 @@ class TopAppBarKtTest {
 
     @Test
     fun rallyTopAppBarTest_currentLabelExists() {
+        //given
         val allScreens = RallyScreen.values().toList()
         composeTestRule.setContent {
             RallyTopAppBar(
@@ -67,8 +66,21 @@ class TopAppBarKtTest {
             )
         }
 
+        //then
         composeTestRule
-            .onNodeWithContentDescription(RallyScreen.Accounts.name)
+            .onNode(
+                hasText(RallyScreen.Accounts.name.uppercase(Locale.getDefault())) and
+                        hasParent(
+                            hasContentDescription(RallyScreen.Accounts.name)
+                        ),
+                useUnmergedTree = true
+            )
             .assertExists()
+
+//        composeTestRule.onRoot(useUnmergedTree = true).printToLog("currentLabelExists")
+
+//        composeTestRule
+//            .onNodeWithContentDescription(RallyScreen.Accounts.name)
+//            .assertExists()
     }
 }
